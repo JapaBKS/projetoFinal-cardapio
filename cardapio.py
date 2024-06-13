@@ -84,6 +84,29 @@ def adicionar_item_cardapio():
     else:
         print("Categoria inválida.")
 
+def substituir_item_cardapio():
+    categoria = input("Digite a categoria (Bebidas/Entradas/Pratos Principais/Sobremesas): ").capitalize()
+    if categoria in cardapio:
+        subcategoria = input(f"Digite a subcategoria ({'/'.join(cardapio[categoria].keys())}): ").capitalize()
+        if subcategoria in cardapio[categoria]:
+            nome = input("Digite o nome do item a ser substituído: ")
+            item_encontrado = False
+            for item in cardapio[categoria][subcategoria]:
+                if item['Nome'].lower() == nome.lower():
+                    novo_nome = input("Digite o novo nome do item: ")
+                    novo_preco = float(input("Digite o novo preço do item: "))
+                    item['Nome'] = novo_nome
+                    item['Preço'] = novo_preco
+                    item_encontrado = True
+                    print("Item substituído com sucesso.")
+                    break
+            if not item_encontrado:
+                print("Item não encontrado.")
+        else:
+            print("Subcategoria inválida.")
+    else:
+        print("Categoria inválida.")
+
 def buscar_item_cardapio():
     termo = input("Digite o nome do item que deseja buscar: ").lower()
     resultados = []
