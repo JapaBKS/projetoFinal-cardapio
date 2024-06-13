@@ -70,3 +70,16 @@ cardapio = {
         ]
     }
 }
+
+def adicionar_item_cardapio():
+    categoria = input("Digite a categoria (Bebidas/Entradas/Pratos Principais/Sobremesas): ").capitalize()
+    if categoria in cardapio:
+        subcategoria = input(f"Digite a subcategoria ({'/'.join(cardapio[categoria].keys())}): ").capitalize()
+        if subcategoria in cardapio[categoria]:
+            nome = input(f"Digite o nome do item: ")
+            preco = float(input(f"Digite o preço do item: "))
+            cardapio[categoria][subcategoria].append({'Nome': nome, 'Preço': preco})
+        else:
+            print("Subcategoria inválida.")
+    else:
+        print("Categoria inválida.")
