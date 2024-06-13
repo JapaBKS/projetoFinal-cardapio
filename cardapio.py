@@ -83,3 +83,18 @@ def adicionar_item_cardapio():
             print("Subcategoria inválida.")
     else:
         print("Categoria inválida.")
+
+def buscar_item_cardapio():
+    termo = input("Digite o nome do item que deseja buscar: ").lower()
+    resultados = []
+    for categoria, subcategorias in cardapio.items():
+        for subcategoria, itens in subcategorias.items():
+            for item in itens:
+                if termo in item['Nome'].lower():
+                    resultados.append({'Categoria': categoria, 'Subcategoria': subcategoria, 'Nome': item['Nome'], 'Preço': item['Preço']})
+    if resultados:
+        print(f"\nResultados encontrados para '{termo}':")
+        for resultado in resultados:
+            print(f"Categoria: {resultado['Categoria']}, Subcategoria: {resultado['Subcategoria']}, Nome: {resultado['Nome']}, Preço: {resultado['Preço']}")
+    else:
+        print(f"Nenhum item encontrado para '{termo}'.")
