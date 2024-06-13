@@ -83,6 +83,25 @@ def adicionar_item_cardapio():
             print("Subcategoria inválida.")
     else:
         print("Categoria inválida.")
+def remover_item_cardapio():
+    categoria = input("Digite a categoria (Bebidas/Entradas/Pratos Principais/Sobremesas): ").capitalize()
+    if categoria in cardapio:
+        subcategoria = input(f"Digite a subcategoria ({'/'.join(cardapio[categoria].keys())}): ").capitalize()
+        if subcategoria in cardapio[categoria]:
+            nome = input("Digite o nome do item a ser removido: ")
+            item_encontrado = False
+            for item in cardapio[categoria][subcategoria]:
+                if item['Nome'].lower() == nome.lower():
+                    cardapio[categoria][subcategoria].remove(item)
+                    item_encontrado = True
+                    print("Item removido com sucesso.")
+                    break
+            if not item_encontrado:
+                print("Item não encontrado.")
+        else:
+            print("Subcategoria inválida.")
+    else:
+        print("Categoria inválida.")
 
 def substituir_item_cardapio():
     categoria = input("Digite a categoria (Bebidas/Entradas/Pratos Principais/Sobremesas): ").capitalize()
@@ -121,3 +140,49 @@ def buscar_item_cardapio():
             print(f"Categoria: {resultado['Categoria']}, Subcategoria: {resultado['Subcategoria']}, Nome: {resultado['Nome']}, Preço: {resultado['Preço']}")
     else:
         print(f"Nenhum item encontrado para '{termo}'.")
+
+def mostrar_cardapio():
+    print("\nCardápio Completo:")
+    for categoria, subcategorias in cardapio.items():
+        print(f"\nCategoria: {categoria}")
+        for subcategoria, itens in subcategorias.items():
+            print(f"  Subcategoria: {subcategoria}")
+            for item in itens:
+                print(f"    Nome: {item['Nome']}, Preço: {item['Preço']}")
+
+def salvar_cardapio_em_arquivo(cardapio, Cardapio_txt):
+    with open(Cardapio_txt, "w", encoding="utf-8") as arquivo:
+        for categoria, subcategorias in cardapio.items():
+            arquivo.write(f"Categoria: {categoria}\n")
+            for subcategoria, itens in subcategorias.items():
+                arquivo.write(f"  Subcategoria: {subcategoria}\n")
+                for item in itens:
+                    arquivo.write(f"    Produto: {item['Nome']}, Preço: R${item['Preço']:.2f}\n")
+            arquivo.write("\n")
+
+print('Bem-vindo ao ABCDP Coffee')
+while True:
+    escolha = input('Digite 0 para sair \n'
+                    'Digite 1 para Adicionar um item ao cardápio\n' 
+                    'Digite 2 para remover um item do cardápio\n'
+                    'Digite 3 para alterar um item do cardápio\n'
+                    'Digite 4 para buscar um item do cardápio\n'
+                    'Digite 5 para ver o cardápio:\n')
+    if escolha == '1':
+        adicionar_item_cardapio()
+    elif escolha == '2':
+        remover_item_cardapio()
+    elif escolha == '3':
+        substituir_item_cardapio()
+    elif escolha == '4':
+        buscar_item_cardapio()
+    elif escolha == '5':
+        mostrar_cardapio()
+    elif escolha == '0':
+        print('Você saiu.')
+        break
+    else:
+        print("Escolha inválida. Tente novamente.")
+
+salvar_cardapio_em_arquivo(cardapio, "cardapio.txt")
+print("Cardápio salvo em 'cardapio.txt'")
