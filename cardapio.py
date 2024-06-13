@@ -83,6 +83,7 @@ def adicionar_item_cardapio():
             print("Subcategoria inválida.")
     else:
         print("Categoria inválida.")
+
 def remover_item_cardapio():
     categoria = input("Digite a categoria (Bebidas/Entradas/Pratos Principais/Sobremesas): ").capitalize()
     if categoria in cardapio:
